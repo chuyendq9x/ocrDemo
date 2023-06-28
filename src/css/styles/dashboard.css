@@ -1,0 +1,39 @@
+.logo {
+    background-image: url(/src/image/logo.jpg);
+}
+
+.site-layout .site-layout-background {
+    background: #fff;
+}
+[data-theme="dark"] .site-layout .site-layout-background {
+    background: #141414;
+}
+
+#components-layout-demo-side .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+}
+.ci_stripe {
+    width: 100%;
+    height: 18px;
+    margin-top: 0;
+    position: relative;
+    background: url(/src/image/repeat_left.png) repeat-x;
+}
+.ci_stripe_righthalf {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    background: url(/src/image/ci_right.jpg);
+    right: 0px;
+    z-index: 0;
+}
+.ci_stripe_in {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+    background: url(/src/image/ci_bar.png) no-repeat;
+}

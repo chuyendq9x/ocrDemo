@@ -1,0 +1,17 @@
+.textStyle {
+    text-align: center;
+}
+.ant-btn.btn-nextSlider {
+    border: 1px solid #4482FF;
+    background: transparent;
+    color: #4482FF;
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 86px;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 0;
+    height: 35px;
+    text-overflow:'ellipsis';
+    overflow: hidden;
+}

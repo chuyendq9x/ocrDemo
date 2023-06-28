@@ -1,0 +1,96 @@
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /*background-image: none;*/
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #4482FF;
+    /*border-color: #204d74;*/
+}
+.btn.btn-primary:hover {
+
+}
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    color: white !important;
+    background: none !important;
+}
+.alert_style{
+    position: fixed;
+    top: 12px;
+    right: 35px;
+    z-index: 9999
+}
+.ant-input{
+    font-weight: 400;
+}
+
+
+.ant-calendar-picker input, .ant-input{
+    height: 35px;
+}
+.btn-search{
+    margin: 0!important;
+}
+
+.filter-class{
+    position: absolute;
+    bottom: 5px;
+}
+.ant-btn.btn-filter{
+    border: 1px solid #4482FF;
+    background: transparent;
+    color: #4482FF;
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 86px;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 0;
+    height: 35px;
+    text-overflow:'ellipsis';
+    overflow: hidden;
+}
+.ant-btn.btn-filter:hover{
+    /*border: 1px solid #4482FF;*/
+    /*background: #4482FF;*/
+    /*color: #fff;*/
+    color: #fff;
+    background-color: #286090;
+    border:1px solid #204d74;
+}
+.display-inline-block{
+    display: inline-block!important;
+}
+.hearder_1{
+    margin-left: 10% !important;
+}
+.grid2{
+    height: 700px;
+    overflow: scroll;
+}
+/*.grid1{*/
+/*    height: 700px;*/
+/*    overflow: scroll;*/
+/*}*/
+/*.each-slide {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    background-size: cover;*/
+/*}*/
