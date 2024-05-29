@@ -1,121 +1,85 @@
-import React, {useState} from "react";
-import {Button, Col, Input, Row} from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Image, Input, Row, Table } from "antd";
+import Axios from "axios";
+const Dkkd = ({ sendOCR, data }) => {
+    const [imageFiles, setImageFiles] = useState([]);
+    const [fileContent, setFileContent] = useState([]);
+    useEffect(() => {
+        fetchFile();
+    }, []);
 
-const Dkkd = ({sendOCR, data}) => {
-    const [selectedFile, setSelectedFile]= useState(null);
-    const onChangeHandler=event=>{
-        setSelectedFile(event.target.files[0]);
-    }
-    const onClickHandler = () => {
-        sendOCR(selectedFile, "dkkd", 0)
-    }
+    const fetchFile = async () => {
+        try {
+            debugger;
 
-    return(
-        <div>
-            <div>
-                <h3>ẢNH</h3>
-                <>
-                    <div className="form_image">
-                        <Col span={12} offset={8} style={{marginTop:'10px'}}>
-                            <input type="file" name="file" onChange={onChangeHandler}/>
-                        </Col>
-                        <br/>
-                        <Col span={12} offset={7} style={{marginBottom:'10px'}}>
-                            <Button type="button" className="btn btn-success btn-block"
-                                    onClick={onClickHandler}>OCR
-                            </Button>
-                        </Col>
-                    </div>
+            const response = await fetch("http://localhost:3001/nop-tien.txt"); // Replace with the actual URL or path to your file
+            if (!response.ok) {
+                throw new Error("Failed to fetch file");
+            }
+            const text = (await response.text()).trim().toString().split("\n");
+            let imageFiles = [];
+            let fileContent = [];
+            for (let i = 0; i < text.length; i++) {
+                if (i % 2 === 1) {
+                    imageFiles.push(text[i]);
+                } else {
+                    const fileContentJson = JSON.parse(text[i]);
+                    let data = [
+                        {
+                            stk: fileContentJson.result.stk,
+                            cur: fileContentJson.result.cur,
+                            money: fileContentJson.result.money,
+                        },
+                    ];
+                    fileContent.push(data);
+                }
+            }
+            console.log(fileContent);
+            setImageFiles(imageFiles);
 
-                </>
-            </div>
-            <div>
-                <h3>THÔNG TIN OCR</h3>
-                <div className="form_info">
-                    <Row>
-                        <Col xs={{span: 10, offset: 1}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Mã số ĐKKD:</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.masokd}/></Col>
-                            </Row>
-
-                        </Col>
-                        <Col xs={{span: 10, offset: 2}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Ngày đăng ký :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.ngaydki} /></Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row style={{marginTop: '1%'}}>
-                        <Col xs={{span: 10, offset: 1}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Tên tiếng Việt :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.tentv}/></Col>
-                            </Row>
-
-                        </Col>
-                        <Col xs={{span: 10, offset: 2}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Tên tiếng Anh :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.tenta}/></Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row style={{marginTop: '1%'}}>
-                        <Col xs={{span: 20, offset: 8}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Tên viết tắt :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.tenvt}/></Col>
-                            </Row>
-
-                        </Col>
-                        <Col xs={{span: 10, offset: 2}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Địa chỉ :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.diachi}/></Col>
-                            </Row>
-                        </Col>
-
-                    </Row>
-
-                    <Row style={{marginTop: '1%'}}>
-                        <Col xs={{span: 20, offset: 8}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Điện thoại :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.dienthoai}/></Col>
-                            </Row>
-
-                        </Col>
-                        <Col xs={{span: 10, offset: 2}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Nơi đăng ký :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.noidki}/></Col>
-                            </Row>
-                        </Col>
-
-                    </Row>
-
-                    <Row style={{marginTop: '1%'}}>
-                        <Col xs={{span: 20, offset: 8}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Fax :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.fax}/></Col>
-                            </Row>
-
-                        </Col>
-                        <Col xs={{span: 10, offset: 2}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Email :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.emai}/></Col>
-                            </Row>
-                        </Col>
-
-                    </Row>
-
-                </div>
-            </div>
-        </div>
+            setFileContent(fileContent);
+        } catch (error) {
+            console.error("Error fetching file:", error);
+        }
+    };
+    const columns = [
+        {
+            title: "Số tiền khoản",
+            dataIndex: "stk",
+            key: "stk",
+        },
+        {
+            title: "Loại tiền",
+            dataIndex: "cur",
+            key: "cur",
+        },
+        {
+            title: "Số tiền",
+            dataIndex: "money",
+            key: "money",
+        },
+    ];
+    return (
+        <>
+            <>
+                {imageFiles.map((file, index) => (
+                    <>
+                        <Row>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <h3>ẢNH {index + 1}</h3>
+                                <Image src={file} key={index} />
+                            </Col>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <div>
+                                    <h3>THÔNG TIN OCR</h3>
+                                    <Table columns={columns} dataSource={fileContent[index]} />
+                                </div>
+                            </Col>
+                        </Row>
+                    </>
+                ))}
+            </>
+        </>
     );
-}
+};
 export default Dkkd;

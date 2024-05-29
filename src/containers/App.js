@@ -1,13 +1,13 @@
-import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DashBoard from "./DashBoard";
 
 class App extends React.Component {
     render() {
-        return(
+        return (
             <BrowserRouter>
                 <Switch>
-                    <Route  path="/" component={DashBoard} />
+                    <Route path="/" component={DashBoard} />
                 </Switch>
             </BrowserRouter>
         );

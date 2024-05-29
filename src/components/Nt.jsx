@@ -1,64 +1,85 @@
-import React, {useState} from "react";
-import {Button, Col, Input, Row} from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Image, Input, Row, Table } from "antd";
 
-const Nt = ({sendOCR, data}) => {
-    const [selectedFile, setSelectedFile]=useState(null);
-    const onChangeHandler=event=>{
-        setSelectedFile(event.target.files[0]);
-    }
-    const onClickHandler = () => {
-        sendOCR(selectedFile, "nop-tien", 0)
-    }
-    return(
-        <div>
-            <div>
-                <h3>ẢNH</h3>
-                <>
-                    <div className="form_image">
-                        <Col span={12} offset={8} style={{marginTop:'10px'}}>
-                            <input type="file" name="file" onChange={onChangeHandler}/>
-                        </Col>
-                        <br/>
-                        <Col span={12} offset={7} style={{marginBottom:'10px'}}>
-                            <Button type="button" className="btn btn-success btn-block"
-                                    onClick={onClickHandler}>OCR
-                            </Button>
-                        </Col>
-                    </div>
+const Nt = ({ sendOCR, data }) => {
+    const [imageFiles, setImageFiles] = useState([]);
+    const [fileContent, setFileContent] = useState([]);
+    useEffect(() => {
+        fetchFile();
+    }, []);
 
-                </>
-            </div>
-            <div>
-                <h3>THÔNG TIN OCR</h3>
-                <div className="form_info">
-                    <Row>
-                        <Col xs={{span: 10, offset: 1}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Số tài khoản :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.stk}/></Col>
-                            </Row>
+    const fetchFile = async () => {
+        try {
+            debugger;
 
-                        </Col>
-                        <Col xs={{span: 10, offset: 2}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Sổ tiền bằng sô :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.money}/></Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row style={{marginTop: '1%'}}>
-                        <Col xs={{span: 10, offset: 1}} lg={{span: 10, offset: 1}}>
-                            <Row>
-                                <Col xl={4}><h5>Loại tiền :</h5></Col>
-                                <Col xl={10}><Input value={(data == null) ? "" : data.cur}/></Col>
-                            </Row>
+            const response = await fetch("http://localhost:3001/rut-tien.txt"); // Replace with the actual URL or path to your file
+            if (!response.ok) {
+                throw new Error("Failed to fetch file");
+            }
+            const text = (await response.text()).trim().toString().split("\n");
+            let imageFiles = [];
+            let fileContent = [];
+            for (let i = 0; i < text.length; i++) {
+                if (i % 2 === 1) {
+                    imageFiles.push(text[i]);
+                } else {
+                    const fileContentJson = JSON.parse(text[i]);
+                    let data = [
+                        {
+                            stk: fileContentJson.result.stk,
+                            cur: fileContentJson.result.cur,
+                            money: fileContentJson.result.money,
+                        },
+                    ];
+                    fileContent.push(data);
+                }
+            }
+            console.log(fileContent);
+            setImageFiles(imageFiles);
 
-                        </Col>
-
-                    </Row>
-                </div>
-            </div>
-        </div>
+            setFileContent(fileContent);
+        } catch (error) {
+            console.error("Error fetching file:", error);
+        }
+    };
+    const columns = [
+        {
+            title: "Số tiền khoản",
+            dataIndex: "stk",
+            key: "stk",
+        },
+        {
+            title: "Loại tiền",
+            dataIndex: "cur",
+            key: "cur",
+        },
+        {
+            title: "Số tiền",
+            dataIndex: "money",
+            key: "money",
+        },
+    ];
+    return (
+        <>
+            <>
+                {imageFiles.map((file, index) => (
+                    <>
+                        <Row>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <h3>ẢNH {index + 1}</h3>
+                                <Image src={file} key={index} />
+                            </Col>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <div>
+                                    <h3>THÔNG TIN OCR</h3>
+                                    <Table columns={columns} dataSource={fileContent[index]} />
+                                </div>
+                            </Col>
+                        </Row>
+                    </>
+                ))}
+            </>
+        </>
     );
-}
+};
 export default Nt;
