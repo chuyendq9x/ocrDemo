@@ -91,7 +91,7 @@ const Home = () => {
             <TabPane tab="Rút tiền" key="2">
                 <Nt />
             </TabPane>
-            <TabPane tab="Tiết kiệm" key="3">
+            <TabPane tab="Tất toán sổ tiết kiệm" key="3">
                 <Rt />
             </TabPane>
         </Tabs>

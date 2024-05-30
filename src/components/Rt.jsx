@@ -29,6 +29,8 @@ const Rt = ({ sendOCR, data }) => {
                             stk: fileContentJson.result.stk,
                             cur: "VND",
                             money: fileContentJson.result.money,
+                            period: fileContentJson.result.period,
+                            interest: fileContentJson.result.interest,
                         },
                     ];
                     fileContent.push(data);
@@ -57,6 +59,16 @@ const Rt = ({ sendOCR, data }) => {
             title: "Số tiền",
             dataIndex: "money",
             key: "money",
+        },
+        {
+            title: "Kỳ hạn",
+            dataIndex: "period",
+            key: "period",
+        },
+        {
+            title: "Lãi suất",
+            dataIndex: "interest",
+            key: "interest",
         },
     ];
     return (
