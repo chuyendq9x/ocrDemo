@@ -27,7 +27,7 @@ const Dkkd = ({ sendOCR, data }) => {
                     let data = [
                         {
                             stk: fileContentJson.result.stk,
-                            cur: fileContentJson.result.cur,
+                            cur: "VND",
                             money: fileContentJson.result.money,
                         },
                     ];
@@ -44,7 +44,7 @@ const Dkkd = ({ sendOCR, data }) => {
     };
     const columns = [
         {
-            title: "Số tiền khoản",
+            title: "Số tài khoản",
             dataIndex: "stk",
             key: "stk",
         },

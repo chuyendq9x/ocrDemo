@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Image, Input, Row, Table } from "antd";
-
 const Nt = ({ sendOCR, data }) => {
     const [imageFiles, setImageFiles] = useState([]);
     const [fileContent, setFileContent] = useState([]);
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
     useEffect(() => {
         fetchFile();
     }, []);
 
     const fetchFile = async () => {
         try {
-            debugger;
-
             const response = await fetch("http://localhost:3001/rut-tien.txt"); // Replace with the actual URL or path to your file
             if (!response.ok) {
                 throw new Error("Failed to fetch file");
@@ -27,7 +26,7 @@ const Nt = ({ sendOCR, data }) => {
                     let data = [
                         {
                             stk: fileContentJson.result.stk,
-                            cur: fileContentJson.result.cur,
+                            cur: "VND",
                             money: fileContentJson.result.money,
                         },
                     ];
@@ -44,7 +43,7 @@ const Nt = ({ sendOCR, data }) => {
     };
     const columns = [
         {
-            title: "Số tiền khoản",
+            title: "Số tài khoản",
             dataIndex: "stk",
             key: "stk",
         },
@@ -68,6 +67,7 @@ const Nt = ({ sendOCR, data }) => {
                             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <h3>ẢNH {index + 1}</h3>
                                 <Image src={file} key={index} />
+                                {/* <Document file={"./public/TM_29052024_085932_2.pdf"} /> */}
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <div>

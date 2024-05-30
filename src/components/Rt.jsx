@@ -27,7 +27,7 @@ const Rt = ({ sendOCR, data }) => {
                     let data = [
                         {
                             stk: fileContentJson.result.stk,
-                            cur: fileContentJson.result.cur,
+                            cur: "VND",
                             money: fileContentJson.result.money,
                         },
                     ];
