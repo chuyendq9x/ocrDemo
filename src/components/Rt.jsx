@@ -12,7 +12,7 @@ const Rt = ({ sendOCR, data }) => {
         try {
             debugger;
 
-            const response = await fetch("http://localhost:3001/tiet-kiem.txt"); // Replace with the actual URL or path to your file
+            const response = await fetch("http://localhost:3001/tat-toan.txt"); // Replace with the actual URL or path to your file
             if (!response.ok) {
                 throw new Error("Failed to fetch file");
             }
@@ -26,7 +26,10 @@ const Rt = ({ sendOCR, data }) => {
                     const fileContentJson = JSON.parse(text[i]);
                     let data = [
                         {
-                            stk: fileContentJson.result.stk,
+                            // stk: fileContentJson.result.stk,
+                            skt: "0155708500K",
+                            stks: "TP0872827",
+                            // stks: fileContentJson.result.stks,
                             cur: "VND",
                             money: fileContentJson.result.money,
                             period: fileContentJson.result.period,
@@ -49,6 +52,11 @@ const Rt = ({ sendOCR, data }) => {
             title: "Số tài khoản",
             dataIndex: "stk",
             key: "stk",
+        },
+        {
+            title: "Sổ tiết kiệm",
+            dataIndex: "stks",
+            key: "stks",
         },
         {
             title: "Loại tiền",
